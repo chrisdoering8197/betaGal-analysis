@@ -15,7 +15,7 @@ library(tidyverse)
 source("betaGalAnalysisFunctions.R")
 theme_set(theme_classic())
 
-fileNames <- c("sampleData/6-6-18 LB32_LB73.xlsx","sampleData/6-6-18 LB32_LB73 fake data for testing.xlsx")
+fileNames <- c("myData/CRD 7-11-18 OD420 and OD600.xlsx","myData/CRD 7-12-18 OD420 and OD600.xlsx","myData/CRD 7-13-18 OD420 and OD600.xlsx")
 
 processedFiles <- map(fileNames, meanExpressionOneReplicate)
 
