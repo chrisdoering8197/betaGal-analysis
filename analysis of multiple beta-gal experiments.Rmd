@@ -43,7 +43,7 @@ ggplot(dayMeans) +
 
 Single plot mean ± SE for RpoS level
 ```{r}
-strainName <- "CRD34"
+strainName <- "CRD35"
 oneStrainData <- subset(dayMeans,strain == strainName)
 ggplot(oneStrainData) + 
   geom_point(aes(x = RpoS, y = meanAcrossDays)) + 
@@ -103,7 +103,7 @@ dayMeans %>%
 ```
 
 ```{r}
-strainName <- "CRD33"
+strainName <- "CRD34"
 oneStrainData <- subset(dayMeans,strain == strainName)
 oneStrainSegments <- subset(segmentEnds, strain == strainName)
 oneStrainData %>%
@@ -113,4 +113,15 @@ oneStrainData %>%
   facet_grid(.~strain) +
   geom_segment(data = oneStrainSegments, mapping = aes(x = RpoS_min, xend = RpoS_max, y = expression_min, yend = expression_max)) +
   labs(x = "% of wild-type RpoS", y = "LacZ expression (Miller Units)")
+```
+
+Sensitivity Value Distribution
+```{r}
+strainName <- "CRD33"
+hist(sensitivities$sensitivity[sensitivities$strain == strainName],main = "Strain Sensitivity Distribution",xlab = strainName)
+```
+
+Swaps t-test
+```{r}
+
 ```
