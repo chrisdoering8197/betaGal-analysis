@@ -31,7 +31,7 @@ repSize <- 8
 linear26Est <- vector(length=sampleSize)
 
 #define strain
-Strain <- "CRD31"
+Strain <- "CRD34"
 
 #store mean expression values for the selected strain at 0%, 26%, and 89%
 rpoS0 <- subset(combinedData, RpoS == 0 & strain == Strain, select = c(meanExpression))

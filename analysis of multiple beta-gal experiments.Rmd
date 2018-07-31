@@ -15,7 +15,8 @@ library(tidyverse)
 source("betaGalAnalysisFunctions.R")
 theme_set(theme_classic())
 
-fileNames <- c("myData/CRD 7-11-18 OD420 and OD600.xlsx","myData/CRD 7-12-18 OD420 and OD600.xlsx","myData/CRD 7-13-18 OD420 and OD600.xlsx","myData/CRD 7-17-18 OD420 and OD600 morning.xlsx","myData/CRD 7-17-18 OD420 and OD600 afternoon.xlsx","myData/CRD 7-18-18 OD420 and OD600 morning.xlsx","myData/CRD 7-18-18 OD420 and OD600 afternoon.xlsx","myData/CRD 7-19-18 OD420 and OD600 morning.xlsx","myData/CRD 7-19-18 OD420 and OD600 afternoon.xlsx","myData/CRD 7-20-18 OD420 and OD600 afternoon.xlsx","myData/CRD 7-24-18 OD420 and OD600.xlsx","myData/CRD 7-25-18 OD420 and OD600.xlsx")
+fileNames <- c("myData/CRD 7-11-18 OD420 and OD600.xlsx","myData/CRD 7-12-18 OD420 and OD600.xlsx","myData/CRD 7-13-18 OD420 and OD600.xlsx","myData/CRD 7-17-18 OD420 and OD600 morning.xlsx","myData/CRD 7-17-18 OD420 and OD600 afternoon.xlsx","myData/CRD 7-18-18 OD420 and OD600 morning.xlsx","myData/CRD 7-18-18 OD420 and OD600 afternoon.xlsx","myData/CRD 7-19-18 OD420 and OD600 morning.xlsx","myData/CRD 7-19-18 OD420 and OD600 afternoon.xlsx","myData/CRD 7-20-18 OD420 and OD600 afternoon.xlsx","myData/CRD 7-24-18 OD420 and OD600.xlsx","myData/CRD 7-25-18 OD420 and OD600.xlsx","myData/RAN 7-24-18 BETA GAL RAN11, RAN12, RAN13.xlsx","myData/RAN 7-26-18 BETA GAL RAN11, RAN12, RAN13.xlsx","myData/RAN 7-27-18 BETA GAL RAN11, RAN12.xlsx","myData/RAN 7-28-18 BETA GAL RAN11, RAN12, RAN13.xlsx","myData/RAN 7-29-18 BETA GAL RAN11, RAN12, RAN13.xlsx"
+)
 
 processedFiles <- map(fileNames, meanExpressionOneReplicate)
 
@@ -42,8 +43,9 @@ ggplot(dayMeans) +
 ```
 
 Single plot mean ± SE for RpoS level
-```{r}
-strainName <- "CRD35"
+must be run manually
+```{r, eval = FALSE}
+strainName <- "CRD39"
 oneStrainData <- subset(dayMeans,strain == strainName)
 ggplot(oneStrainData) + 
   geom_point(aes(x = RpoS, y = meanAcrossDays)) + 
@@ -101,13 +103,15 @@ dayMeans %>%
                  
 ```
 
-```{r}
-strainName <- "CRD34"
+Single Strain Full Graph
+must be run manually
+```{r, eval = FALSE}
+strainName <- "CRD33"
 oneStrainData <- subset(dayMeans,strain == strainName)
 oneStrainSegments <- subset(segmentEnds, strain == strainName)
 
 #rename strain with genotype and store in function
-genotype <- as_labeller(c("CRD34" = "gadB Core in astC"))
+genotype <- as_labeller(c("CRD39" = "WT astC"))
 
 oneStrainData %>%
   ggplot() + 
@@ -128,8 +132,9 @@ oneStrainData %>%
 ```
 
 Sensitivity Value Distribution
-```{r}
-strainName <- "CRD33"
+Must be run manually
+```{r, eval = FALSE}
+strainName <- "CRD39"
 hist(sensitivities$sensitivity[sensitivities$strain == strainName],main = "Strain Sensitivity Distribution",xlab = strainName)
 ```
 
@@ -158,4 +163,16 @@ dayMeans %>%
   #add correct axis titles and coordinates
   labs(x = "% of wild-type RpoS", y = "LacZ expression (Miller Units)") +
   expand_limits(x = 0, y = 0)
+```
+
+Swaps Sensitivities t-test
+```{r}
+#Comparison of WT gadB to core astC in gadB
+gadwtSens <- sensitivities$sensitivity[sensitivities$strain == "CRD38"]
+gadswapSens <- sensitivities$sensitivity[sensitivities$strain == "CRD33"]
+t.test(gadwtSens,gadswapSens)
+#Comparision of WT astC to core gadB in astC
+astwtSense<- sensitivities$sensitivity[sensitivities$strain == "CRD39"]
+astswapSens <- sensitivities$sensitivity[sensitivities$strain == "CRD34"]
+t.test(astwtSense,astswapSens)
 ```
