@@ -91,7 +91,7 @@ ggplot(combinedData) + geom_point(aes(x=RpoS, y=`Miller Units`)) + facet_grid(.~
 ggplot(combinedData) + geom_point(aes(x=RpoS, y=`Miller Units`, color=strain))
 ```
 
-```{r}
+```{r, eval = FALSE}
 strainName <- "CRD34"
 oneStrainData <- subset(combinedData,strain == strainName)
 ggplot(oneStrainData) + geom_point(aes(x=RpoS, y=`Miller Units`)) + facet_grid(.~strain) 

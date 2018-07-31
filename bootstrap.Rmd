@@ -13,7 +13,7 @@ theme_set(theme_classic())
 Import your files here:
 ```{r}
 
-fileNames <- c("myData/CRD 7-11-18 OD420 and OD600.xlsx","myData/CRD 7-12-18 OD420 and OD600.xlsx","myData/CRD 7-13-18 OD420 and OD600.xlsx","myData/CRD 7-17-18 OD420 and OD600 morning.xlsx","myData/CRD 7-17-18 OD420 and OD600 afternoon.xlsx","myData/CRD 7-18-18 OD420 and OD600 morning.xlsx","myData/CRD 7-18-18 OD420 and OD600 afternoon.xlsx","myData/CRD 7-19-18 OD420 and OD600 morning.xlsx","myData/CRD 7-19-18 OD420 and OD600 afternoon.xlsx","myData/CRD 7-20-18 OD420 and OD600 afternoon.xlsx","myData/CRD 7-24-18 OD420 and OD600.xlsx","myData/CRD 7-25-18 OD420 and OD600.xlsx")
+fileNames <- c("myData/CRD 7-11-18 OD420 and OD600.xlsx","myData/CRD 7-12-18 OD420 and OD600.xlsx","myData/CRD 7-13-18 OD420 and OD600.xlsx","myData/CRD 7-17-18 OD420 and OD600 morning.xlsx","myData/CRD 7-17-18 OD420 and OD600 afternoon.xlsx","myData/CRD 7-18-18 OD420 and OD600 morning.xlsx","myData/CRD 7-18-18 OD420 and OD600 afternoon.xlsx","myData/CRD 7-19-18 OD420 and OD600 morning.xlsx","myData/CRD 7-19-18 OD420 and OD600 afternoon.xlsx","myData/CRD 7-20-18 OD420 and OD600 afternoon.xlsx","myData/CRD 7-24-18 OD420 and OD600.xlsx","myData/CRD 7-25-18 OD420 and OD600.xlsx","myData/RAN 7-24-18 BETA GAL RAN11, RAN12, RAN13.xlsx","myData/RAN 7-26-18 BETA GAL RAN11, RAN12, RAN13.xlsx","myData/RAN 7-27-18 BETA GAL RAN11, RAN12.xlsx","myData/RAN 7-28-18 BETA GAL RAN11, RAN12, RAN13.xlsx","myData/RAN 7-29-18 BETA GAL RAN11, RAN12, RAN13.xlsx")
 processedFiles <- map(fileNames, meanExpressionOneReplicate)
 
 combinedData <- bind_rows(processedFiles)

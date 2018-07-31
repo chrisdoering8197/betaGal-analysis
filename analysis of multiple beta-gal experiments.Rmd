@@ -67,7 +67,6 @@ Calculate sensitivity of a promoter.
 sensitivities <- dataForSensitivity %>% 
                   group_by(strain, date, experimenter) %>%
                   summarise(sensitivity = calculateSingleSens(RpoS, meanExpression))
-View(sensitivities)
 ```
 
 
@@ -106,13 +105,26 @@ dayMeans %>%
 strainName <- "CRD34"
 oneStrainData <- subset(dayMeans,strain == strainName)
 oneStrainSegments <- subset(segmentEnds, strain == strainName)
+
+#rename strain with genotype and store in function
+genotype <- as_labeller(c("CRD34" = "gadB Core in astC"))
+
 oneStrainData %>%
   ggplot() + 
+  
   geom_point(aes(x = RpoS, y = meanAcrossDays, size = 4), show.legend = FALSE) + 
+  
   geom_errorbar(aes(x = RpoS, y = meanAcrossDays, ymax = upperErrorBar, ymin = lowerErrorBar)) + 
-  facet_grid(.~strain) +
+  
+  #facet_wrap creates a grid that allows us to define dimensions
+  facet_wrap(~strain, scales = "free", ncol = 3, labeller = genotype)+
+   
+    #this formats the plot titles to remove border and position text outside plot
+  theme(strip.background = element_blank(), strip.placement = "outside") +
+  
   geom_segment(data = oneStrainSegments, mapping = aes(x = RpoS_min, xend = RpoS_max, y = expression_min, yend = expression_max)) +
-  labs(x = "% of wild-type RpoS", y = "LacZ expression (Miller Units)")
+  labs(x = "% of wild-type RpoS", y = "LacZ expression (Miller Units)")+
+  expand_limits(x = 0, y = 0)
 ```
 
 Sensitivity Value Distribution
@@ -121,7 +133,29 @@ strainName <- "CRD33"
 hist(sensitivities$sensitivity[sensitivities$strain == strainName],main = "Strain Sensitivity Distribution",xlab = strainName)
 ```
 
-Swaps t-test
+Multi-strain Plot with Modified Titles
 ```{r}
+#rename strains with genotype and store in function
+genotype <- as_labeller(c(`LZ34` = "argR", `LZ35` = "nac", `LZ36` = "ntrC", `LZ41` = "argR control", `LZ42` = "nac control", `LZ43` = "ntrC control"))
 
+dayMeans %>% 
+  ggplot() + 
+  
+  geom_point(aes(x = RpoS, y = meanAcrossDays), show.legend = FALSE) + 
+  
+  #creates error bars 
+  geom_errorbar(aes(x = RpoS, y = meanAcrossDays, ymax = upperErrorBar, ymin = lowerErrorBar, width  = 8)) + 
+  
+  #facet_wrap creates a grid that allows us to define dimensions
+  facet_wrap(~strain, scales = "free", ncol = 3, labeller = genotype)+
+  
+  #this formats the plot titles to remove border and position text outside plot
+  theme(strip.background = element_blank(), strip.placement = "outside") +
+  
+  #this function plots the line to illustrate null expectation
+  geom_segment(data = segmentEnds, mapping = aes(x = RpoS_min, xend = RpoS_max, y = expression_min, yend = expression_max)) +
+  
+  #add correct axis titles and coordinates
+  labs(x = "% of wild-type RpoS", y = "LacZ expression (Miller Units)") +
+  expand_limits(x = 0, y = 0)
 ```
